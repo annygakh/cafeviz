@@ -83,10 +83,8 @@ $(function (){
 	  map.setCenter(options.position);
 	}
 	function on_success_geolocation(position){
-		var latitdue 
 		var pos = new google.maps.LatLng(position.coords.latitude,
 		                                 position.coords.longitude);
-		console.log()
 		var infowindow = new google.maps.InfoWindow({
 		  map: map,
 		  position: pos,
@@ -101,7 +99,6 @@ $(function (){
 	function on_success_foursquare_request(object){
 		console.log(object.response);
 		parse_response(object);
-		console.log(points[0]);
 		var points_google_array = new google.maps.MVCArray(points);
 		heatmap = new google.maps.visualization.HeatmapLayer({
 		    data: points_google_array,
@@ -112,8 +109,8 @@ $(function (){
 	}
 	function make_url(center_of_map){
 		console.log('remake_url');
-		var new_lat = center_of_map.k;
-		var new_lng = center_of_map.D;
+		var new_lat = center_of_map.lat();
+		var new_lng = center_of_map.lng();
 
 		var new_url = 'https://api.foursquare.com/v2/venues/' + api 
 					+ '&ll=' + new_lat + ',' + new_lng
@@ -138,7 +135,6 @@ $(function (){
 	}
 	function get_center_of_map(){
 		var curr_map_center = map.getCenter();
-		console.log(curr_map_center);
 		return curr_map_center;
 	}
 	function send_request(new_url){
@@ -153,7 +149,6 @@ $(function (){
 		console.log("Error retrieving places from foursquare");
 	}
 	function parse_response(object){
-		console.log('parse_response');
 		var resp = object.response;
 		var group = resp.groups[0];
 		var items = group.items;
