@@ -1,11 +1,67 @@
 html, body, #map-canvas {
     height: 100%;
     margin: 0px;
-    padding: 0px
+    padding: 0px;
+
+    
+
+}
+html, button {
+	font-family: "Open Sans", "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", Sans-Serif;
+	font-size: 14px;
+	font-weight: 200;
+}
+body {
+	background-color: #59ABE3;
+}
+main {
+	margin: 20px;
+	padding: 20px;
+	text-align: center;
+}
+#center-ubc{
+	text-transform: uppercase;
+	font-size: 12px;
+}
+
+#center-ubc, footer, .desc{
+	margin: 10px;
+}
+footer {
+	color: white;
+	margin-bottom: 25px;
 }
 
 #map-canvas{
 	height: 70%;
 	margin-bottom: 20px;
 
+}
+
+.desc {
+	/*display: inline-block;*/
+	color: white;
+	font-size: 17px;
+}
+button {
+  border: 0;
+  background: #1F4788;
+  border-radius: 4px;
+  box-shadow: 0 5px 0 #003171;
+  color: #fff;
+  cursor: pointer;
+  font: inherit;
+  margin: 0;
+  outline: 0;
+  padding: 12px 20px;
+  transition: all .1s linear;
+}
+button:active {
+  box-shadow: 0 2px 0 #006599;
+  transform: translateY(3px);
+}
+
+.hidden {
+	visibility: hidden;
+	/*display: none;*/
 }

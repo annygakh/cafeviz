@@ -6,13 +6,24 @@
     <meta charset="utf-8">
     <link rel="stylesheet" href="js/assets/style.css">
     <!-- // <script src="https://maps.googleapis.com/maps/api/js?v=3.exp"></script> -->
+    <link href='http://fonts.googleapis.com/css?family=Lato:100,400' rel='stylesheet' type='text/css'>
     <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&signed_in=true&libraries=visualization"></script>
   </head>
   <body>
     <div id="map-canvas"></div>
+    <main>
+    <span id="loading">Loading...</span>
+      <p class="desc"> 
+        Ever wondered which regions have the highest rated restaraunts? <br> Drag the map to the area you are interested in, and let's find out! 
+      </p>
+      <button id="center-ubc">Center on downtown Vancouver</button>
+      <p>
+        This map only shows 30 places at a time.
+      </p>
+      <footer>Data is taken from foursquare.com
+      </footer>
 
-    <button id="center-ubc">Center on ubc</button>
-    <footer>Data is taken from foursquare.com</footer>
+    </main>
     <script src="js/lib/jquery.min.js"></script>
     <script src='js/app.js'></script>
   </body>
