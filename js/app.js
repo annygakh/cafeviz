@@ -85,7 +85,8 @@ $(function (){
 	// ---------------- Functions --------------------------
 	function loaded(){
 		console.log("loaded");
-		$("#loading").addClass("hidden");
+		// $("#loading").addClass("hidden");
+		$(".loader").addClass("hidden");
 		on_center_changed();
 	}
 	function handle_no_geolocation(errorFlag) {
@@ -133,7 +134,8 @@ $(function (){
 	    });
 	    // heatmap.setMap(null);
 	    heatmap.setMap(map);
-	    $("#loading").addClass("hidden");
+	    // $("#loading").addClass("hidden");
+	    $(".loader").addClass("hidden");
 	}
 	function make_url(center_of_map){
 		console.log('remake_url');
@@ -156,7 +158,8 @@ $(function (){
 	}
 
 	function on_center_changed(){
-		$("#loading").removeClass("hidden");
+		// $("#loading").removeClass("hidden");
+		$(".loader").removeClass("hidden");
 		var center_latlng = get_center_of_map();
 		var new_url = make_url(center_latlng);
 		var resp_obj = send_request(new_url);

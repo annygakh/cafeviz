@@ -15,8 +15,8 @@ body {
 	background-color: #59ABE3;
 }
 main {
-	margin: 20px;
-	padding: 20px;
+	margin: 5px ;
+	padding: 5px;
 	text-align: center;
 }
 #center-ubc{
@@ -34,7 +34,7 @@ footer {
 
 #map-canvas{
 	height: 70%;
-	margin-bottom: 20px;
+	margin-bottom: 10px;
 
 }
 
@@ -65,3 +65,12 @@ button:active {
 	visibility: hidden;
 	/*display: none;*/
 }
+.loader {
+	position: absolute;
+	top: 20%;
+	left: 50%;
+	/*width: 	10px;*/
+	/*height: 10px;*/
+	z-index: 2;
+}
+
