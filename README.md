@@ -1,9 +1,13 @@
 Name: Cafeviz
+
 Concept: Interactive heatmap of restaraunts 
 where the weight is determined by the
 rating of the restaraunt. 
+
 Toolkit: Javascript, Google Maps, Foursquare
+
 Take a look: Source code, detailed description 
+
 Date: April 2015  
 
 
