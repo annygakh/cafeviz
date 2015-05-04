@@ -73,4 +73,7 @@ button:active {
 	/*height: 10px;*/
 	z-index: 2;
 }
+a{
+	color: white;
+}
 
