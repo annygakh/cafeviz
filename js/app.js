@@ -69,13 +69,11 @@ $(function (){
 	  }
 	  // add google event listeners
 	  google.maps.event.addListener(map, 'dragend', on_center_changed);
-	  google.maps.event.addListener(map, 'tilesloaded', loaded);
 	  
-		// send_request(make_url);
-
+	// DO NOT PUT ANY CALLS FOR REQUESTS HERE
 	}
 
-	
+	// on_center_changed();
 
 
 	// ---------------- Setting up listeners ---------------- 
@@ -85,57 +83,21 @@ $(function (){
 	// ---------------- Functions --------------------------
 	function loaded(){
 		console.log("loaded");
-		// $("#loading").addClass("hidden");
 		$(".loader").addClass("hidden");
-		on_center_changed();
+		// on_center_changed();
+		// DO NOT REQUEST ON CENTER CHANGED HERE
 	}
-	function handle_no_geolocation(errorFlag) {
-	  if (errorFlag) {
-	    var content = 'Error: The Geolocation service failed.';
-	  } else {
-	    var content = 'Error: Your browser doesn\'t support geolocation.';
-	  }
-
-	  var options = {
-	    map: map,
-	    // position: ubc_latlong,
-	    position: dt_latlng,
-	    content: content
-	  };
-
-	  var infowindow = new google.maps.InfoWindow(options);
-	  map.setCenter(options.position);
+	function on_center_changed(){
+		$(".loader").removeClass("hidden");
+		var center_latlng = get_center_of_map();
+		var new_url = make_url(center_latlng);
+		var resp_obj = send_request(new_url);
+		heatmap.setMap(null);
+		delete_markers();
 	}
-	function on_success_geolocation(position){
-		var pos = new google.maps.LatLng(position.coords.latitude,
-		                                 position.coords.longitude);
-		var infowindow = new google.maps.InfoWindow({
-		  map: map,
-		  position: pos,
-		  content: 'Oh hey. You are here.'
-		});
-
-		map.setCenter(pos);
-		// send_request(make_url(pos));
-		
-	}
-	function handle_center_on_ubc(){
-		// map.setCenter(ubc_latlong);
-		map.setCenter(dt_latlng);
-		// send_request(make_url(dt_latlng));
-	}
-	function on_success_foursquare_request(object){
-		console.log(object.response);
-		parse_response(object);
-		var points_google_array = new google.maps.MVCArray(points);
-		heatmap = new google.maps.visualization.HeatmapLayer({
-		    data: points_google_array,
-		    radius: 30
-	    });
-	    // heatmap.setMap(null);
-	    heatmap.setMap(map);
-	    // $("#loading").addClass("hidden");
-	    $(".loader").addClass("hidden");
+	function get_center_of_map(){
+		var curr_map_center = map.getCenter();
+		return curr_map_center;
 	}
 	function make_url(center_of_map){
 		console.log('remake_url');
@@ -156,20 +118,6 @@ $(function (){
 		return new_url;
 
 	}
-
-	function on_center_changed(){
-		// $("#loading").removeClass("hidden");
-		$(".loader").removeClass("hidden");
-		var center_latlng = get_center_of_map();
-		var new_url = make_url(center_latlng);
-		var resp_obj = send_request(new_url);
-		heatmap.setMap(null);
-		delete_markers();
-	}
-	function get_center_of_map(){
-		var curr_map_center = map.getCenter();
-		return curr_map_center;
-	}
 	function send_request(new_url){
 		$.ajax({
 			type: 'GET',
@@ -178,9 +126,58 @@ $(function (){
 			error: on_error_foursquare_request
 		});
 	}
+	function on_success_foursquare_request(object){
+		console.log(object.response);
+		parse_response(object);
+		var points_google_array = new google.maps.MVCArray(points);
+		heatmap = new google.maps.visualization.HeatmapLayer({
+		    data: points_google_array,
+		    radius: 30
+	    });
+	    // heatmap.setMap(null);
+	    heatmap.setMap(map);
+	    $(".loader").addClass("hidden");
+	}
 	function on_error_foursquare_request(err) {
 		console.log("Error retrieving places from foursquare");
 	}
+
+	function handle_no_geolocation(errorFlag) {
+	  if (errorFlag) {
+	    var content = 'Error: The Geolocation service failed.';
+	  } else {
+	    var content = 'Error: Your browser doesn\'t support geolocation.';
+	  }
+
+	  var options = {
+	    map: map,
+	    // position: ubc_latlong,
+	    position: dt_latlng,
+	    content: content
+	  };
+
+	  var infowindow = new google.maps.InfoWindow(options);
+	  map.setCenter(options.position);
+	  loaded();
+	}
+	function on_success_geolocation(position){
+		var pos = new google.maps.LatLng(position.coords.latitude,
+		                                 position.coords.longitude);
+		var infowindow = new google.maps.InfoWindow({
+		  map: map,
+		  position: pos,
+		  content: 'Oh hey. You are here.'
+		});
+
+		map.setCenter(pos);
+		loaded();
+		
+	}
+	function handle_center_on_ubc(){
+		map.setCenter(dt_latlng);
+		on_center_changed();
+	}
+	
 	function parse_response(object){
 		var resp = object.response;
 		var group = resp.groups[0];
@@ -217,7 +214,6 @@ $(function (){
 		    });
 			var marker = add_marker(google_latlng);
 			var hours_open = "";
-			console.log(is_open);
 			if (is_open)
 				hours_open = "Status: " + status;
 			var description = name + "<br>" + "Rating: " + rating
@@ -235,7 +231,7 @@ $(function (){
 		var marker = new google.maps.Marker({
 			position: google_latlng,
 			map: map,
-			opacity: 0.2,
+			opacity: 0.2
 		});
 
 		markers.push(marker);
@@ -249,9 +245,9 @@ $(function (){
 	    listeners.push(listener);
 	}
 	// Sets the map on all markers in the array.
-	function set_all_map(map) {
+	function set_all_map(mapk) {
 	  for (var i = 0; i < markers.length; i++) {
-	    markers[i].setMap(map);
+	    markers[i].setMap(mapk);
 	  }
 	}
 
@@ -271,6 +267,7 @@ $(function (){
 		for(var i = 0; i < listeners.length; i++){
 			google.maps.event.removeListener(listeners[i]);
 		}
+		listeners = [];
 	}
 
 
